@@ -5,11 +5,11 @@
 //
 
 #include <stdlib.h>
-
 #include <sdi/types.h>
+#include <l4io.h>
 #include <sdi/sdi.h>
-
+ 
 
 void LogMessage (char* message) {
-    panic ((char *)"LogMessage () is not implemented. Put your code in here");
+    printf (message);
 }
