@@ -1,0 +1,53 @@
+ia32-crt0.o: ../../../src/root/ia32-crt0.S
+main.o: ../../../src/root/main.cc ../../../include/l4/thread.h \
+  ../../../include/l4/types.h ../../../include/l4/ia32/types.h \
+  ../../../include/l4/ia32/specials.h ../../../include/l4/ia32/syscalls.h \
+  ../../../include/l4/ia32/vregs.h ../../../include/l4/message.h \
+  ../../../include/l4/space.h ../../../include/l4/ipc.h \
+  ../../../include/l4/sigma0.h ../../../include/l4/kip.h \
+  ../../../include/l4/bootinfo.h ../../../include/stdlib.h \
+  ../../../include/sdi/types.h ../../../include/sdi/sdi.h \
+  ../../../include/l4/kdebug.h ../../../include/l4/ia32/kdebug.h \
+  ../../../include/l4io.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  ../../../include/elf.h ../../../src/root/root.h \
+  ../../../include/macros.h ../../../include/idl4glue.h
+logger.o: ../../../src/root/logger.cc ../../../include/l4io.h \
+  ../../../include/l4/types.h ../../../include/l4/ia32/types.h \
+  ../../../include/l4/ia32/specials.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  ../../../include/idl4glue.h ../../../include/stdlib.h \
+  ../../../include/sdi/types.h ../../../include/l4/kip.h \
+  ../../../include/l4/ia32/syscalls.h ../../../include/l4/ia32/vregs.h \
+  ../../../include/l4/message.h ../../../include/l4/thread.h \
+  ../../../include/sdi/sdi.h ../../../include/l4/kdebug.h \
+  ../../../include/l4/ia32/kdebug.h logger-server.h ../../if/iflocator.h \
+  /usr/local/include/idl4/idl4.h /usr/local/include/idl4/macros.h \
+  /usr/local/include/idl4/corba.h \
+  /usr/local/include/idl4/glue/v4-generic/runtime.h \
+  /usr/local/include/idl4/arch/generic/helpers.h \
+  /usr/local/include/idl4/api/v4/interface.h ../../../include/l4/space.h \
+  ../../../include/l4/ipc.h \
+  /usr/local/include/idl4/glue/v4-generic/msgbuf.h \
+  ../../../src/root/root.h ../../../include/macros.h
+locator.o: ../../../src/root/locator.cc ../../../include/idl4glue.h \
+  ../../../include/stdlib.h ../../../include/sdi/types.h \
+  ../../../include/l4/types.h ../../../include/l4/ia32/types.h \
+  ../../../include/l4/ia32/specials.h ../../../include/l4/kip.h \
+  ../../../include/l4/ia32/syscalls.h ../../../include/l4/ia32/vregs.h \
+  ../../../include/l4/message.h ../../../include/l4/thread.h \
+  ../../../include/sdi/sdi.h ../../../include/l4/kdebug.h \
+  ../../../include/l4/ia32/kdebug.h locator-server.h \
+  ../../../include/l4io.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h
+pager.o: ../../../src/root/pager.cc ../../../include/l4/message.h \
+  ../../../include/l4/types.h ../../../include/l4/ia32/types.h \
+  ../../../include/l4/ia32/specials.h ../../../include/l4/ia32/vregs.h \
+  ../../../include/l4/ipc.h ../../../include/l4/ia32/syscalls.h \
+  ../../../include/l4/thread.h ../../../include/l4/sigma0.h \
+  ../../../include/l4/kip.h ../../../include/sdi/sdi.h \
+  ../../../include/l4/kdebug.h ../../../include/l4/ia32/kdebug.h \
+  ../../../include/sdi/types.h ../../../include/stdlib.h \
+  ../../../include/l4io.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  ../../../src/root/root.h ../../../include/macros.h

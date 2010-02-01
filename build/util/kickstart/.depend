@@ -1,0 +1,63 @@
+crt0-ia32.o: ../../../util/kickstart/crt0-ia32.S ../../config.h
+kickstart.o: ../../../util/kickstart/kickstart.cc ../../config.h \
+  ../../../include/l4io.h ../../../include/l4/types.h \
+  ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  ../../../util/kickstart/kickstart.h
+kipmgr.o: ../../../util/kickstart/kipmgr.cc \
+  ../../../util/kickstart/kipmgr.h ../../../include/l4/types.h \
+  ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
+  ../../../include/l4/kcp.h ../../../include/l4/kip.h \
+  ../../../include/l4/ia32/syscalls.h ../../../include/l4/ia32/vregs.h \
+  ../../../include/l4/message.h ../../../util/kickstart/lib.h \
+  ../../../util/kickstart/elf.h ../../../util/kickstart/bootinfo.h \
+  ../../config.h ../../../util/kickstart/mbi.h \
+  ../../../include/l4/bootinfo.h
+elf.o: ../../../util/kickstart/elf.cc ../../config.h \
+  ../../../include/l4io.h ../../../include/l4/types.h \
+  ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  ../../../util/kickstart/kickstart.h ../../../util/kickstart/elf.h \
+  ../../../util/kickstart/bootinfo.h ../../../util/kickstart/mbi.h \
+  ../../../include/l4/bootinfo.h ../../../util/kickstart/lib.h
+lib.o: ../../../util/kickstart/lib.cc ../../../util/kickstart/lib.h \
+  ../../../include/l4/types.h ../../../include/l4/ia32/types.h \
+  ../../../include/l4/ia32/specials.h
+bootinfo.o: ../../../util/kickstart/bootinfo.cc ../../config.h \
+  ../../../include/l4io.h ../../../include/l4/types.h \
+  ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  ../../../util/kickstart/bootinfo.h ../../../util/kickstart/mbi.h \
+  ../../../include/l4/bootinfo.h ../../../util/kickstart/kickstart.h \
+  ../../../util/kickstart/lib.h ../../../util/kickstart/elf.h
+ia32.o: ../../../util/kickstart/ia32.cc ../../config.h \
+  ../../../include/l4io.h ../../../include/l4/types.h \
+  ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  ../../../util/kickstart/kickstart.h ../../../util/kickstart/mbi.h \
+  ../../../util/kickstart/kipmgr.h ../../../include/l4/kcp.h \
+  ../../../include/l4/kip.h ../../../include/l4/ia32/syscalls.h \
+  ../../../include/l4/ia32/vregs.h ../../../include/l4/message.h \
+  ../../../util/kickstart/lib.h
+mbi.o: ../../../util/kickstart/mbi.cc ../../../util/kickstart/mbi.h \
+  ../../../include/l4/types.h ../../../include/l4/ia32/types.h \
+  ../../../include/l4/ia32/specials.h ../../../util/kickstart/lib.h
+mbi-ia32.o: ../../../util/kickstart/mbi-ia32.cc ../../config.h \
+  ../../../include/l4io.h ../../../include/l4/types.h \
+  ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  ../../../include/l4/kip.h ../../../include/l4/ia32/syscalls.h \
+  ../../../include/l4/ia32/vregs.h ../../../include/l4/message.h \
+  ../../../util/kickstart/kickstart.h ../../../util/kickstart/mbi.h \
+  ../../../util/kickstart/lib.h ../../../util/kickstart/kipmgr.h \
+  ../../../include/l4/kcp.h
+mbi-loader.o: ../../../util/kickstart/mbi-loader.cc ../../config.h \
+  ../../../include/l4io.h ../../../include/l4/types.h \
+  ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
+  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  ../../../util/kickstart/kickstart.h ../../../util/kickstart/mbi.h \
+  ../../../util/kickstart/kipmgr.h ../../../include/l4/kcp.h \
+  ../../../include/l4/kip.h ../../../include/l4/ia32/syscalls.h \
+  ../../../include/l4/ia32/vregs.h ../../../include/l4/message.h \
+  ../../../util/kickstart/lib.h ../../../util/kickstart/elf.h \
+  ../../../util/kickstart/bootinfo.h ../../../include/l4/bootinfo.h
