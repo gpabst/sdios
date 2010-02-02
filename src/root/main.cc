@@ -248,6 +248,7 @@ int main(void) {
 
     /* Now we search for the third module, 
        which will (hopefully) be our testclient */ 
+    printf("Starting test clients ...\n");
     L4_BootRec_t* module = find_module (2, (L4_BootInfo_t*)L4_BootInfo (L4_KernelInterface ()));
     L4_Word_t startip = load_elfimage (module); 
 
@@ -255,23 +256,31 @@ int main(void) {
 
     L4_ThreadId_t testid = L4_GlobalId ( L4_ThreadNo (L4_Myself ()) + 3, 1);
     start_task (testid, startip, utcbarea);
-    printf ("Testclient started with as %lx\n", testid.raw);
+    printf ("Testclient 1 started with as %lx\n", testid.raw);
+
+    printf("Starting test clients ...\n");
+    L4_BootRec_t* module2 = find_module (3, (L4_BootInfo_t*)L4_BootInfo (L4_KernelInterface ()));
+    L4_Word_t startip2 = load_elfimage (module2); 
+
+    L4_ThreadId_t testid2 = L4_GlobalId ( L4_ThreadNo (L4_Myself ()) + 4, 1);
+    start_task (testid2, startip2, utcbarea);
+    printf ("Testclient 2 started with as %lx\n", testid2.raw);
 
 		/* Start a hello world thread */
 		printf ("Starting hello world threads ...\n");
 		
-		hello1id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 4, 1);
+		hello1id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 5, 1);
 		start_thread (hello1id,
 				(L4_Word_t)&hello_server,
 				(L4_Word_t)&hello1_stack[1023],
-				UTCBaddress(4) );
+				UTCBaddress(5) );
 		printf ("Started with id %lx\n", hello1id.raw);
 		
-		hello2id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 5, 1);
+		hello2id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 6, 1);
 		start_thread (hello2id,
 				(L4_Word_t)&hello_server,
 				(L4_Word_t)&hello2_stack[1023],
-				UTCBaddress(5) );
+				UTCBaddress(6) );
 		printf ("Started with id %lx\n", hello2id.raw);
     /* now it is time to become the pager for all those threads we 
        created recently */
