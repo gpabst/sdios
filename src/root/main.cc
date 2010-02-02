@@ -20,7 +20,9 @@
 #include "root.h"
 
 #include <idl4glue.h>
-
+#include <if/iflocator.h>
+#include <if/iflogging.h>
+	
 /* local threadids */
 L4_ThreadId_t sigma0id;
 L4_ThreadId_t pagerid;
@@ -168,11 +170,25 @@ L4_Word_t load_elfimage (L4_BootRec_t* mod) {
 #define UTCBaddress(x) ((void*)(((L4_Word_t)L4_MyLocalId().raw + utcbsize * (x)) & ~(utcbsize - 1)))
 
 void hello_server(void){
+	 /* Guess locatorid */
+    locatorid = L4_GlobalId (L4_ThreadIdUserBase (L4_KernelInterface ()) + 3, 1);
+
+    CORBA_Environment env (idl4_default_environment);    
+    L4_ThreadId_t logger_id = L4_nilthread;
+
+
+    printf ("Resolve logger ...\n");
+    while (L4_IsNilThread (loggerid)) {
+        IF_LOCATOR_Locate ((CORBA_Object)locatorid, IF_LOGGING_ID, &logger_id, &env);
+    }
+ 
 	char outbuf[256];
 	int r = snprintf(outbuf, sizeof(outbuf), "Hello World Thread no %lx\n", L4_Myself ().raw);
 	
 	if (r > 0)
-		LogMessage(outbuf);
+		 /* Printout message through logger */
+    IF_LOGGING_LogMessage ((CORBA_Object)loggerid, outbuf, &env);
+   
 		
 	while(1){ }
 }

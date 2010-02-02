@@ -21,7 +21,7 @@
 IDL4_INLINE void  logger_LogMessage_implementation(CORBA_Object  _caller, const logmessage_t  message, idl4_server_environment * _env)
 
 {
-  /* implementation of IF_LOGGING::LogMessage */
+  printf((char*)message);
   
   return;
 }
