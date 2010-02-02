@@ -34,8 +34,14 @@ int main () {
     IF_LOGGING_LogMessage ((CORBA_Object)loggerid, "Hello, this is your testclient", &env);
 
     /* Now try our sdi lib */
-    LogMessage ("Hello this is your lib");
-
+    
+    /* Output test message */
+    char outbuf[256];
+		int r = snprintf(outbuf, sizeof(outbuf), "Hello testclient no %lx\n", L4_Myself ().raw);
+	
+		if (r > 0)
+			LogMessage(outbuf);
+	
     /* Spin forever */
     while (42);
     
