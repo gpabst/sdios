@@ -2,7 +2,7 @@ panic.o: ../../../lib/sdi/panic.cc ../../../include/l4/kdebug.h \
   ../../../include/l4/types.h ../../../include/l4/ia32/types.h \
   ../../../include/l4/ia32/specials.h ../../../include/l4/ia32/kdebug.h \
   ../../../include/l4io.h \
-  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  /opt/gcc-3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6/include/stdarg.h \
   ../../../include/stdlib.h ../../../include/sdi/types.h \
   ../../../include/l4/kip.h ../../../include/l4/ia32/syscalls.h \
   ../../../include/l4/ia32/vregs.h ../../../include/l4/message.h \
@@ -12,14 +12,16 @@ logging.o: ../../../lib/sdi/logging.cc ../../../include/stdlib.h \
   ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
   ../../../include/l4/kip.h ../../../include/l4/ia32/syscalls.h \
   ../../../include/l4/ia32/vregs.h ../../../include/l4/message.h \
-  ../../../include/l4/thread.h ../../../include/sdi/sdi.h \
-  ../../../include/l4/kdebug.h ../../../include/l4/ia32/kdebug.h
+  ../../../include/l4/thread.h ../../../include/l4io.h \
+  /opt/gcc-3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6/include/stdarg.h \
+  ../../../include/sdi/sdi.h ../../../include/l4/kdebug.h \
+  ../../../include/l4/ia32/kdebug.h
 heap.o: ../../../lib/sdi/heap.cc ../../../include/stdlib.h \
   ../../../include/sdi/types.h ../../../include/l4/types.h \
   ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
   ../../../include/l4/kip.h ../../../include/l4/ia32/syscalls.h \
   ../../../include/l4/ia32/vregs.h ../../../include/l4/message.h \
   ../../../include/l4/thread.h ../../../include/l4io.h \
-  /usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h \
+  /opt/gcc-3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6/include/stdarg.h \
   ../../../include/sdi/sdi.h ../../../include/l4/kdebug.h \
   ../../../include/l4/ia32/kdebug.h

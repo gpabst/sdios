@@ -536,8 +536,8 @@ s,@target_alias@,|#_!!_#|,g
 s,@CROSSCC@,|#_!!_#|,g
 s,@CC@,|#_!!_#|gcc,g
 s,@CFLAGS@,|#_!!_#|-nostdinc -I/usr/local/include -g -O2,g
-s,@LDFLAGS@,|#_!!_#|-N -L$(top_builddir)/lib -L/usr/lib/gcc/i486-linux-gnu/4.3.2 -nostdlib ,g
-s,@CPPFLAGS@,|#_!!_#|-I. -I$(top_srcdir)/include -I$(top_builddir) -I/usr/lib/gcc/i486-linux-gnu/4.3.2/include -DCONFIG_ARCH_IA32 ,g
+s,@LDFLAGS@,|#_!!_#|-N -L$(top_builddir)/lib -L/opt/gcc-3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6 -nostdlib ,g
+s,@CPPFLAGS@,|#_!!_#|-I. -I$(top_srcdir)/include -I$(top_builddir) -I/opt/gcc-3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6/include -DCONFIG_ARCH_IA32 ,g
 s,@ac_ct_CC@,|#_!!_#|gcc,g
 s,@EXEEXT@,|#_!!_#|,g
 s,@OBJEXT@,|#_!!_#|o,g

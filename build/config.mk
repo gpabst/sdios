@@ -49,8 +49,8 @@ CXX=		$(CC) -x c++
 AS=		$(CC)
 CFLAGS=		-nostdinc -I/usr/local/include -g -O2
 CXXFLAGS=	$(CFLAGS) -fno-exceptions
-LDFLAGS=	-N -L$(top_builddir)/lib -L/usr/lib/gcc/i486-linux-gnu/4.3.2 -nostdlib 
-CPPFLAGS=	-I. -I$(top_srcdir)/include -I$(top_builddir) -I/usr/lib/gcc/i486-linux-gnu/4.3.2/include -DCONFIG_ARCH_IA32 
+LDFLAGS=	-N -L$(top_builddir)/lib -L/opt/gcc-3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6 -nostdlib 
+CPPFLAGS=	-I. -I$(top_srcdir)/include -I$(top_builddir) -I/opt/gcc-3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6/include -DCONFIG_ARCH_IA32 
 IDL4FLAGS=      -I$(top_srcdir)/if -I$(top_srcdir)/include -I$(top_builddir) -mc++ -DCONFIG_ARCH_IA32 --word-size=32 --interface=V4 --platform=generic
 IDL4=           /usr/local/bin/idl4
 LGCC=		-lgcc
