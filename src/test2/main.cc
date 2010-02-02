@@ -30,9 +30,12 @@ int main () {
         IF_LOCATOR_Locate ((CORBA_Object)locatorid, IF_LOGGING_ID, &loggerid, &env);
     }
 
-    /* Printout message through logger */
-    IF_LOGGING_LogMessage ((CORBA_Object)loggerid, "Hello, this is your testclient", &env);
-
+    	char outbuf[256];
+			int r = snprintf(outbuf, sizeof(outbuf), "Testclient no 2 with TID=%lx\n", L4_Myself ().raw);
+	
+		if (r > 0)
+			 /* Printout message through logger */
+  	  IF_LOGGING_LogMessage ((CORBA_Object)loggerid, outbuf, &env);
     /* Now try our sdi lib */
     LogMessage ("Hello this is your lib");
 
