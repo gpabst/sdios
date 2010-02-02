@@ -20,7 +20,7 @@ int main () {
     printf ("Testclient is alive\n");
     
     /* Guess locatorid */
-    locatorid = L4_GlobalId (L4_ThreadIdUserBase (L4_KernelInterface ()) + 3, 1);
+    locatorid = L4_GlobalId (L4_ThreadIdUserBase (L4_KernelInterface ()) + 5, 1);
 
     CORBA_Environment env (idl4_default_environment);    
     L4_ThreadId_t loggerid = L4_nilthread;
@@ -37,10 +37,10 @@ int main () {
     
     /* Output test message */
     char outbuf[256];
-		int r = snprintf(outbuf, sizeof(outbuf), "Hello testclient no %lx\n", L4_Myself ().raw);
+		int r = snprintf(outbuf, sizeof(outbuf), "Hello testclient no 1 w/ TID=%lx\n", L4_Myself ().raw);
 	
 		if (r > 0)
-			LogMessage(outbuf);
+		//	LogMessage(outbuf);
 	
     /* Spin forever */
     while (42);

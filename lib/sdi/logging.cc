@@ -11,5 +11,5 @@
  
 
 void LogMessage (char* message) {
-    printf (message);
+    panic ("tes");
 }

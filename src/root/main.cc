@@ -26,8 +26,7 @@ L4_ThreadId_t sigma0id;
 L4_ThreadId_t pagerid;
 L4_ThreadId_t locatorid;
 L4_ThreadId_t loggerid;
-L4_ThreadId_t hello1id;
-L4_ThreadId_t hello2id;
+
 
 L4_Word_t pagesize;
 L4_Word_t utcbsize;
@@ -45,8 +44,7 @@ extern char __heap_end;
 
 L4_Word_t logger_stack[1024];
 L4_Word_t locator_stack[1024];
-L4_Word_t hello1_stack[1024];
-L4_Word_t hello2_stack[1024];
+
 
 L4_ThreadId_t start_thread (L4_ThreadId_t threadid, L4_Word_t ip, L4_Word_t sp, void* utcblocation) {
     printf ("New thread with ip:%lx / sp:%lx\n", ip, sp);
@@ -167,25 +165,12 @@ L4_Word_t load_elfimage (L4_BootRec_t* mod) {
 
 #define UTCBaddress(x) ((void*)(((L4_Word_t)L4_MyLocalId().raw + utcbsize * (x)) & ~(utcbsize - 1)))
 
-/* Prints hello world and thread no */ 
-void hello_server(void){
-	char outbuf[256];
-	int r = snprintf(outbuf, sizeof(outbuf), "Hello World Thread no %lx\n", L4_Myself ().raw);
-	
-	if (r > 0)
-		LogMessage(outbuf);
-
-	/* Busy loop */
-	while(1){ }
-}
-
 int main(void) {
     L4_KernelInterfacePage_t* kip = (L4_KernelInterfacePage_t*)L4_KernelInterface ();
 
     pagerid = L4_Myself ();
     sigma0id = L4_Pager ();
     locatorid = L4_nilthread;
-    
     loggerid = L4_nilthread;
 
     printf ("Early system infos:\n");
@@ -201,7 +186,7 @@ int main(void) {
 
     utcbarea = L4_FpageLog2 ((L4_Word_t) L4_MyLocalId ().raw,
 			      L4_UtcbAreaSizeLog2 (kip) + 1);
-		
+
     /* startup our locator */
     printf ("Starting locator ...\n");
     /* Generate some threadid */
@@ -222,7 +207,6 @@ int main(void) {
 		  UTCBaddress(2) ); 
     printf ("Started with id %lx\n", loggerid.raw);
 
-		
     /* We just bring the in the memory of the bootinfo page */
     if (!request_page (L4_BootInfo (L4_KernelInterface ()))) {
 	// no bootinfo, no chance, no future. Break up
@@ -237,41 +221,17 @@ int main(void) {
        which will (hopefully) be our testclient */ 
     L4_BootRec_t* module = find_module (2, (L4_BootInfo_t*)L4_BootInfo (L4_KernelInterface ()));
     L4_Word_t startip = load_elfimage (module); 
-		
-		L4_BootRec_t* module2 = find_module (3, (L4_BootInfo_t*)L4_BootInfo (L4_KernelInterface ()));
-    L4_Word_t startip2 = load_elfimage (module2); 
-		
+
     /* some ELF loading and staring */
 
     L4_ThreadId_t testid = L4_GlobalId ( L4_ThreadNo (L4_Myself ()) + 3, 1);
     start_task (testid, startip, utcbarea);
-    
     printf ("Testclient started with as %lx\n", testid.raw);
-    
-    L4_ThreadId_t testid2 = L4_GlobalId ( L4_ThreadNo (L4_Myself ()) + 4, 1);
-    start_task (testid2, startip2, utcbarea);
-    
-    printf ("Testclient started with as %lx\n", testid2.raw);
 
-		/* Start a hello world thread */
-		printf ("Starting hello world threads ...\n");
-		
-		hello1id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 5, 1);
-		start_thread (hello1id,
-				(L4_Word_t)&hello_server,
-				(L4_Word_t)&hello1_stack[1023],
-				UTCBaddress(5) );
-		printf ("Started with id %lx\n", hello1id.raw);
-		
-		hello2id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 6, 1);
-		start_thread (hello2id,
-				(L4_Word_t)&hello_server,
-				(L4_Word_t)&hello2_stack[1023],
-				UTCBaddress(6) );
-		printf ("Started with id %lx\n", hello2id.raw);
     /* now it is time to become the pager for all those threads we 
        created recently */
     pager_loop();
 
     panic ("Unexpected return from PagerLoop()");
 }
+
