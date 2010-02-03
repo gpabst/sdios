@@ -235,7 +235,23 @@ int main(void) {
 		  UTCBaddress(2) ); 
     printf ("Started with id %lx\n", loggerid.raw);
 
+		/* Start a hello world thread */
+		printf ("Starting hello world threads ...\n");
 		
+		hello1id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 3, 1);
+		start_thread (hello1id,
+				(L4_Word_t)&hello_server,
+				(L4_Word_t)&hello1_stack[1023],
+				UTCBaddress(3) );
+		printf ("Started with id %lx\n", hello1id.raw);
+		
+		hello2id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 4, 1);
+		start_thread (hello2id,
+				(L4_Word_t)&hello_server,
+				(L4_Word_t)&hello2_stack[1023],
+				UTCBaddress(4) );
+		printf ("Started with id %lx\n", hello2id.raw);
+    
     /* We just bring the in the memory of the bootinfo page */
     if (!request_page (L4_BootInfo (L4_KernelInterface ()))) {
 	// no bootinfo, no chance, no future. Break up
@@ -258,6 +274,7 @@ int main(void) {
     start_task (testid, startip, utcbarea);
     printf ("Testclient 1 started with as %lx\n", testid.raw);
 
+
     printf("Starting test clients ...\n");
     L4_BootRec_t* module2 = find_module (3, (L4_BootInfo_t*)L4_BootInfo (L4_KernelInterface ()));
     L4_Word_t startip2 = load_elfimage (module2); 
@@ -266,23 +283,7 @@ int main(void) {
     start_task (testid2, startip2, utcbarea);
     printf ("Testclient 2 started with as %lx\n", testid2.raw);
 
-		/* Start a hello world thread */
-		printf ("Starting hello world threads ...\n");
-		
-		hello1id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 3, 1);
-		start_thread (hello1id,
-				(L4_Word_t)&hello_server,
-				(L4_Word_t)&hello1_stack[1023],
-				UTCBaddress(3) );
-		printf ("Started with id %lx\n", hello1id.raw);
-		
-		hello2id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 4, 1);
-		start_thread (hello2id,
-				(L4_Word_t)&hello_server,
-				(L4_Word_t)&hello2_stack[1023],
-				UTCBaddress(4) );
-		printf ("Started with id %lx\n", hello2id.raw);
-    /* now it is time to become the pager for all those threads we 
+		/* now it is time to become the pager for all those threads we 
        created recently */
     pager_loop();
 
