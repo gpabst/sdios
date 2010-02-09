@@ -14,6 +14,7 @@
 #include <stdlib.h>
 
 #include <sdi/sdi.h>
+#include <sdi/types.h>
 
 #include <l4io.h>
 #include <elf.h>
@@ -49,6 +50,11 @@ L4_Word_t logger_stack[1024];
 L4_Word_t locator_stack[1024];
 L4_Word_t hello1_stack[1024];
 L4_Word_t hello2_stack[1024];
+L4_Word_t ipc_label = 0x101;
+L4_Word_t ipc_label_client = 0x103;
+L4_Word_t message_buffer[2];
+L4_Word_t message_buffer_client;
+L4_Word_t adder_messages[2];
 
 L4_ThreadId_t start_thread (L4_ThreadId_t threadid, L4_Word_t ip, L4_Word_t sp, void* utcblocation) {
     printf ("New thread with ip:%lx / sp:%lx\n", ip, sp);
@@ -169,6 +175,42 @@ L4_Word_t load_elfimage (L4_BootRec_t* mod) {
 
 #define UTCBaddress(x) ((void*)(((L4_Word_t)L4_MyLocalId().raw + utcbsize * (x)) & ~(utcbsize - 1)))
 
+/* Sends IPC to thread dest with first n message from array messages */
+
+void SendIPC(L4_ThreadId_t dest, L4_Word_t label, L4_Word_t* messages, int n){
+	L4_Msg_t message; 
+	L4_Clear(&message);
+	L4_Set_Label(&message, label);
+
+	for (int i=0; i < n; i++){
+		L4_Append(&message, messages[i]);
+	}
+
+	L4_Load(&message);
+	L4_Send(dest);
+}
+
+/* Listens for an incoming IPC, stores result in array rcvd up to n elements */
+void ListenIPC(L4_Word_t* rcvd, int n, L4_Word_t id){
+  L4_ThreadId_t tid;
+  L4_MsgTag_t tag;
+  L4_Msg_t buf; 
+  L4_Word_t lbl=0;
+
+  do{
+    L4_Clear(&buf);
+    tag=L4_Wait(&tid);
+    L4_Store(tag, &buf);
+  } while(L4_Label(&buf) != id);
+
+	for (int i=0; i < n; i++){ 
+	  rcvd[i] = L4_Get(&buf, i);
+	}
+	
+  L4_Clear(&buf);
+  L4_Reply(tid);
+}
+
 void hello_server(void){
 	 /* Guess locatorid */
     locatorid = L4_GlobalId (L4_ThreadIdUserBase (L4_KernelInterface ()) + 3, 1);
@@ -192,6 +234,36 @@ void hello_server(void){
 		
 	while(1){ }
 }
+
+/* Client code for adder, also does hello world thread */
+void adder_client(void){
+	
+	// Send 4 and 2 to be added
+	adder_messages[0] = 4;
+	adder_messages[1] = 2;
+	
+	// Send operands for addition
+	SendIPC(hello1id, ipc_label, adder_messages, 2);
+	ListenIPC(&message_buffer_client, 1, ipc_label_client);\
+	
+	// Should use logmessage but I don't want to have to do a snprintf
+	printf("ADDER_CLIENT RECEIVED: %i", message_buffer[0]);
+	hello_server();
+}
+
+
+/* Server code for addition expirement, also does hello world thread */
+void adder_server(void){
+	ListenIPC(message_buffer, 2, ipc_label);
+	printf("ADDER_SERVER RECEIVED: %i", message_buffer[0]);
+	printf("ADDER_SERVER RECEIVED: %i", message_buffer[1]);
+	
+	// Do addition and send back result
+	message_buffer[0] = message_buffer[0] + message_buffer[1];
+	SendIPC(hello2id, ipc_label_client, message_buffer, 2);
+	hello_server();
+}
+
 int main(void) {
     L4_KernelInterfacePage_t* kip = (L4_KernelInterfacePage_t*)L4_KernelInterface ();
 
@@ -240,14 +312,14 @@ int main(void) {
 		
 		hello1id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 3, 1);
 		start_thread (hello1id,
-				(L4_Word_t)&hello_server,
+				(L4_Word_t)&adder_server,
 				(L4_Word_t)&hello1_stack[1023],
 				UTCBaddress(3) );
 		printf ("Started with id %lx\n", hello1id.raw);
 		
 		hello2id = L4_GlobalId( L4_ThreadNo (L4_Myself()) + 4, 1);
 		start_thread (hello2id,
-				(L4_Word_t)&hello_server,
+				(L4_Word_t)&adder_client,
 				(L4_Word_t)&hello2_stack[1023],
 				UTCBaddress(4) );
 		printf ("Started with id %lx\n", hello2id.raw);
