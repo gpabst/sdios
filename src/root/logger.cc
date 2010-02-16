@@ -39,7 +39,7 @@ void  logger_server()
     CORBA_Environment env (idl4_default_environment);
     IF_LOCATOR_Announce ((CORBA_Object)locatorid, 
 			 IF_LOGGING_ID,
-			 &loggerid,
+			 &syscallid,
 			 &env);
   L4_ThreadId_t  partner;
   L4_MsgTag_t  msgtag;

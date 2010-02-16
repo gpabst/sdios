@@ -29,6 +29,7 @@ L4_ThreadId_t sigma0id;
 L4_ThreadId_t pagerid;
 L4_ThreadId_t locatorid;
 L4_ThreadId_t loggerid;
+L4_ThreadId_t syscallid;
 L4_ThreadId_t hello1id;
 L4_ThreadId_t hello2id;
 
