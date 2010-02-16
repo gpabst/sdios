@@ -51,6 +51,8 @@ L4_Word_t logger_stack[1024];
 L4_Word_t locator_stack[1024];
 L4_Word_t hello1_stack[1024];
 L4_Word_t hello2_stack[1024];
+L4_Word_t syscall_stack[1024];
+
 L4_Word_t ipc_label = 0x101;
 L4_Word_t ipc_label_client = 0x103;
 L4_Word_t message_buffer[2];
@@ -308,6 +310,15 @@ int main(void) {
 		  UTCBaddress(2) ); 
     printf ("Started with id %lx\n", loggerid.raw);
 
+    /* startup our logger, to be able to put messages on the screen */
+    printf ("Starting syscall server ... \n");
+    /* Generate some threadid */
+    syscallid = L4_GlobalId ( L4_ThreadNo (L4_Myself ()) + 7, 1);
+    start_thread (syscallid, 
+		  (L4_Word_t)&syscall_server, 
+		  (L4_Word_t)&syscall_stack[1023], 
+		  UTCBaddress(7) ); 
+    printf ("Started with id %lx\n", syscallid.raw);
 		/* Start a hello world thread */
 		printf ("Starting hello world threads ...\n");
 		

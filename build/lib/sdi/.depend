@@ -33,3 +33,21 @@ heap.o: ../../../lib/sdi/heap.cc ../../../include/stdlib.h \
   /opt/gcc-3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6/include/stdarg.h \
   ../../../include/sdi/sdi.h ../../../include/l4/kdebug.h \
   ../../../include/l4/ia32/kdebug.h
+syscall.o: ../../../lib/sdi/syscall.cc ../../../include/stdlib.h \
+  ../../../include/sdi/types.h ../../../include/l4/types.h \
+  ../../../include/l4/ia32/types.h ../../../include/l4/ia32/specials.h \
+  ../../../include/l4/kip.h ../../../include/l4/ia32/syscalls.h \
+  ../../../include/l4/ia32/vregs.h ../../../include/l4/message.h \
+  ../../../include/l4/thread.h ../../../include/sdi/sdi.h \
+  ../../../include/l4/kdebug.h ../../../include/l4/ia32/kdebug.h \
+  ../../../include/l4io.h \
+  /opt/gcc-3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6/include/stdarg.h \
+  ../../../include/idl4glue.h ../../if/iflocator.h \
+  /usr/local/include/idl4/idl4.h /usr/local/include/idl4/macros.h \
+  /usr/local/include/idl4/corba.h \
+  /usr/local/include/idl4/glue/v4-generic/runtime.h \
+  /usr/local/include/idl4/arch/generic/helpers.h \
+  /usr/local/include/idl4/api/v4/interface.h ../../../include/l4/space.h \
+  ../../../include/l4/ipc.h \
+  /usr/local/include/idl4/glue/v4-generic/msgbuf.h ../../if/iflogging.h \
+  ../../if/ifsyscall.h
